@@ -103,3 +103,12 @@
     justify-content: center;
     align-items: center;
 }
+
+ /* MOBILE */
+ @media(max-width:825px){
+    .join-container, .create-container, .join-username, .join-code, .create-username{
+        width: 80%;
+    }
+  
+  
+  }
