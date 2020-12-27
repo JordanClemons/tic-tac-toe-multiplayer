@@ -7,7 +7,6 @@ import PlayPage from './playpage/play-page';
 
 function Container() {
   return (
-    <div>
       <Router>
         
           <Switch>
@@ -15,7 +14,6 @@ function Container() {
             <Route path ="/play" exact component={PlayPage}/>
           </Switch>
         </Router>
-    </div>
   );
 }
 
