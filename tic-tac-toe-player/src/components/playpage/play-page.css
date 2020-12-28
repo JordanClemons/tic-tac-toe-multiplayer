@@ -1,0 +1,21 @@
+.waiting-body{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.waiting-header{
+    font-size: 70px;
+}
+
+.waiting-container{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.waiting-spinner{
+    width: 120px;
+}

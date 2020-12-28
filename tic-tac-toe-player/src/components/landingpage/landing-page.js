@@ -48,7 +48,7 @@ function LandingPage() {
         };
       }, []);
 
-    if(play === true){return(<Redirect to={{pathname:"/play", data:[username, code]}}></Redirect>);}
+    if(play === true){return(<Redirect to={{pathname:"/play", data:[username, code], loadStatus:"Waiting"}}></Redirect>);}
     if(lobby === true){return(<Redirect to={{pathname:"/lobby", username:username}}></Redirect>);}
 
   return (
