@@ -33,9 +33,12 @@ io.on('connection', (socket) => {
 
     socket.on('joinRoom', code =>{
       socket.leave("lobby");
-      socket.join(code);
-      io.emit('joinRoom', code);
+      socket.join(code[1]);
+      io.emit('joinRoom', code[1]);
       console.log("test3");
+      if(userCode === undefined){
+        userCode=code;
+      }
     })
 
     socket.on('joinRoomWaiter', code =>{
@@ -58,10 +61,13 @@ io.on('connection', (socket) => {
     })
   
     socket.on('disconnect', () => {
-      var indexToRemove = waitingRooms.indexOf(userCode);
-      if(indexToRemove !== -1){waitingRooms.splice(indexToRemove, 1);}
       console.log(userCode + ' has left');
       console.log("test5");
+      console.log(userCode);
+      if(userCode !== undefined){socket.to(userCode[1]).emit("userLeft");}
+      var indexToRemove = waitingRooms.indexOf(userCode);
+      if(indexToRemove !== -1){waitingRooms.splice(indexToRemove, 1);}
+      console.log(indexToRemove);
     })
   });
 

@@ -19,3 +19,21 @@
 .waiting-spinner{
     width: 120px;
 }
+
+.userLeft-button{
+    border: none;
+    outline: none;
+    width: 200px;
+    height: 45px;
+    margin-top: 40px;
+    background-color: #4d79ff;
+    color: white;
+    font-size: 20px;
+    border-radius: 20px;
+    opacity: .7;
+    transition: .3s;
+}
+
+.userLeft-button:hover{
+    opacity: 1;
+}
