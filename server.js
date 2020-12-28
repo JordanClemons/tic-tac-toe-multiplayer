@@ -32,12 +32,18 @@ io.on('connection', (socket) => {
     })
 
     socket.on('joinRoom', code =>{
-      socket.leave("lobby");
-      socket.join(code[1]);
-      io.emit('joinRoom', code[1]);
-      console.log("test3");
-      if(userCode === undefined){
-        userCode=code;
+      var room = io.sockets.adapter.rooms[code[1]];
+      if(room === undefined){
+        socket.leave("lobby");
+        socket.join(code[1]);
+        io.emit('joinRoom', code[1]);
+        console.log("test3");
+        if(userCode === undefined){
+          userCode=code;
+        }
+      }
+      else{
+        if(room.length >= 2){io.to(socket.id).emit('tooManyPlayers');}
       }
     })
 
@@ -67,7 +73,6 @@ io.on('connection', (socket) => {
       if(userCode !== undefined){socket.to(userCode[1]).emit("userLeft");}
       var indexToRemove = waitingRooms.indexOf(userCode);
       if(indexToRemove !== -1){waitingRooms.splice(indexToRemove, 1);}
-      console.log(indexToRemove);
     })
   });
 

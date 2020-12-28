@@ -20,7 +20,7 @@
     width: 120px;
 }
 
-.userLeft-button{
+.userLeft-button, .toomany-button{
     border: none;
     outline: none;
     width: 200px;
@@ -34,6 +34,6 @@
     transition: .3s;
 }
 
-.userLeft-button:hover{
+.userLeft-button:hover, .toomany-button:hover{
     opacity: 1;
 }

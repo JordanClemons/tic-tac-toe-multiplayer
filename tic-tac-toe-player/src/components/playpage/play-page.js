@@ -15,6 +15,7 @@ function PlayPage() {
 
   const [status, setStatus] = useState("Thinking"); //Can either be waiting for player, or in-game, or thinking
   const [userLeft, setUserLeft] = useState(false);  //If user leaves, notify user left
+  const [tooMany, setTooMany] = useState(false);  //If too many players already in lobby, notifies player
 
   const [testNumber, setTestNumber] = useState(0);
   const testIncrement = () =>{
@@ -55,12 +56,25 @@ function PlayPage() {
     socket.on('userLeft', () =>{
       setUserLeft(true);
     })
+
+    socket.on('tooManyPlayers', () =>{
+      setTooMany(true);
+    })
     
     socket.on('testIncrement', testArray =>{
       setTestNumber(testArray);
     })
   }, [])
 
+  if(tooMany){
+    return(
+      <div className="toomany-body">
+        <h1 className="waiting-header">Tic-Tac-Toe</h1>
+        <h1 className="toomany-text">This lobby is full :(</h1>
+        <Link to={{pathname:"/lobby", data:{data}}}><button className="toomany-button">Find a new game &nbsp;<FontAwesomeIcon icon={faSyncAlt}/></button></Link> 
+      </div>
+    )
+  }
   if(userLeft){
     return(
       <div className="userLeft-body">
