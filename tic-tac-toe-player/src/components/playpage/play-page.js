@@ -15,6 +15,12 @@ function PlayPage() {
 
   const [status, setStatus] = useState("Thinking"); //Can either be waiting for player, or in-game, or thinking
 
+  const [testNumber, setTestNumber] = useState(0);
+  const testIncrement = () =>{
+    var testArray = [testNumber, data[1]];
+    socket.emit('testIncrement', testArray);
+  }
+
   useEffect(() =>{
     console.log(loadStatus);
     setStatus(loadStatus);
@@ -36,10 +42,18 @@ function PlayPage() {
   useEffect(() =>{
     socket.on('joinRoom', checkCode =>{
       if(checkCode === data[1]){
-        socket.emit('joinRoom', data[1]);
+        socket.emit('joinRoomWaiter', data[1]);
         setStatus("Play");
       }
     });
+
+    socket.on('joinRoomWaiter', code =>{
+      if(code === data[1]){socket.emit('joinRoomConfirm', code);}
+    })
+    
+    socket.on('testIncrement', testArray =>{
+      setTestNumber(testArray);
+    })
   }, [])
 
   if(status === "Waiting"){
@@ -58,7 +72,10 @@ function PlayPage() {
   }
   if(status === "Play"){
     return(
-      <div>Play</div>
+      <div>
+        <h1>{testNumber}</h1>
+        <button onClick={ () => testIncrement()}>Increment</button>
+      </div>
     )
   }
   return (
