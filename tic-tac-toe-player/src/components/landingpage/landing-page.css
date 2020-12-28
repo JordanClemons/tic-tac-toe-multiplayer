@@ -57,18 +57,7 @@
     pointer-events: visible;
   }
 
-  .join-container{
-      background-color: white;
-      width: 500px;
-      height: 300px;
-      border-radius: 20px;
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-      align-items: center;
-  }
-
-  .join-username, .join-code, .create-username{
+  .join-username, .create-username{
       width: 350px;
       height: 30px;
       font-size: 20px;
@@ -93,7 +82,7 @@
     opacity: 1;
 }
 
-.create-container{
+.create-container, .join-container{
     background-color: white;
     width: 500px;
     height: 200px;

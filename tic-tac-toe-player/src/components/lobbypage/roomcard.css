@@ -1,0 +1,33 @@
+.roomcard-body{
+    display: flex;
+    justify-content: center;
+}
+
+.roomcard-container{
+    background-color: white;
+    width: 500px;
+    height: 100px;
+    margin: 30px;
+    border-radius: 15px;
+    display: flex;
+    flex-direction: column;
+    justify-content: left;
+    align-items: flex-start;
+    opacity: .7;
+    border: none;
+    outline: none;
+}
+
+.roomcard-name{
+    margin-left: 15px;
+    margin-top: 10px;
+}
+
+.roomcard-code{
+    margin-left: 15px;
+    font-size: 20px;
+}
+
+.roomcard-container:hover{
+    opacity: 1;
+}
