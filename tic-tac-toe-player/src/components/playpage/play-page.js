@@ -67,20 +67,22 @@ function PlayPage() {
   }, [])
 
   if(tooMany){
+    var username = data[0];
     return(
       <div className="toomany-body">
         <h1 className="waiting-header">Tic-Tac-Toe</h1>
         <h1 className="toomany-text">This lobby is full :(</h1>
-        <Link to={{pathname:"/lobby", data:{data}}}><button className="toomany-button">Find a new game &nbsp;<FontAwesomeIcon icon={faSyncAlt}/></button></Link> 
+        <Link to={{pathname:"/lobby", username:{username}}}><button className="toomany-button">Find a new game &nbsp;<FontAwesomeIcon icon={faSyncAlt}/></button></Link> 
       </div>
     )
   }
   if(userLeft){
+    var username = data[0];
     return(
       <div className="userLeft-body">
         <h1 className="waiting-header">Tic-Tac-Toe</h1>
         <h1 className="userLeft-text">Player left :(</h1>
-        <Link to={{pathname:"/lobby", data:{data}}}><button className="userLeft-button">Find a new game &nbsp;<FontAwesomeIcon icon={faSyncAlt}/></button></Link> 
+        <Link to={{pathname:"/lobby", username:{username}}}><button className="userLeft-button">Find a new game &nbsp;<FontAwesomeIcon icon={faSyncAlt}/></button></Link> 
       </div>
     )
   }
@@ -106,9 +108,16 @@ function PlayPage() {
       </div>
     )
   }
+  if(data === undefined){
+    return (
+      <div>
+        <Redirect to="/" />
+      </div>
+    );
+  }
   return (
     <div>
-      Play
+      You shouldn't see this ever
     </div>
   );
 }

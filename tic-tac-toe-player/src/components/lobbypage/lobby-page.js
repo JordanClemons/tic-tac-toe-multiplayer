@@ -47,6 +47,13 @@ useEffect(() =>{
       <Redirect to={{pathname:"/play", loadStatus:"Play", data:[username, redirectCode]}}></Redirect>
     )
   }
+  if(username === undefined){
+    return (
+      <div>
+        <Redirect to="/" />
+      </div>
+    );
+  }
   //If there is no rooms
   if(rooms.length === 0){
     return(
