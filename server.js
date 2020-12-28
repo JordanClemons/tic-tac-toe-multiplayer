@@ -27,7 +27,7 @@ io.on('connection', (socket) => {
     })
 
     socket.on('requestRooms', () =>{
-        io.emit('rooms', waitingRooms);
+        io.to(socket.id).emit('rooms', waitingRooms);
         console.log("test2");
     })
 
@@ -44,6 +44,9 @@ io.on('connection', (socket) => {
     })
 
     socket.on('joinRoomConfirm', code =>{
+      var indexToRemove = waitingRooms.indexOf(userCode);
+      if(indexToRemove !== -1){waitingRooms.splice(indexToRemove, 1);}
+      console.log(indexToRemove);
       socket.leave("lobby");
       socket.join(code);
       console.log("test7");
