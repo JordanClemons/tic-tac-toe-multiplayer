@@ -5,6 +5,8 @@ import { faSpinner, faSyncAlt} from '@fortawesome/free-solid-svg-icons'
 import io from 'socket.io-client';
 import './play-page.css';
 
+import Game from './Game/game';
+
 let socket;
 
 function PlayPage() {
@@ -103,8 +105,7 @@ function PlayPage() {
   if(status === "Play"){
     return(
       <div>
-        <h1>{testNumber}</h1>
-        <button onClick={ () => testIncrement()}>Increment</button>
+        <Game/>
       </div>
     )
   }
