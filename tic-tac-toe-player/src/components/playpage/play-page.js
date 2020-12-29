@@ -12,23 +12,24 @@ let socket;
 function PlayPage() {
 
   const data = useLocation().data;
+  const username = data[0];
   const loadStatus = useLocation().loadStatus;
-  console.log(data);
 
   const [status, setStatus] = useState("Thinking"); //Can either be waiting for player, or in-game, or thinking
   const [userLeft, setUserLeft] = useState(false);  //If user leaves, notify user left
   const [tooMany, setTooMany] = useState(false);  //If too many players already in lobby, notifies player
+  const [XO, setXO] = useState("O"); //Host is O
+  const [otherPlayer, setOtherPlayer] = useState("");
+  const [yourTurn, setYourTurn] = useState(false);
 
   const [testNumber, setTestNumber] = useState(0);
   const testIncrement = () =>{
-    var testArray = [testNumber, data[1]];
+    var testArray = [testNumber, data];
     socket.emit('testIncrement', testArray);
   }
 
   useEffect(() =>{
-    console.log(loadStatus);
     setStatus(loadStatus);
-    console.log(status);
     socket=io('http://localhost:5000', {transports: ['websocket']});
 
   return () => {
@@ -46,13 +47,21 @@ function PlayPage() {
   useEffect(() =>{
     socket.on('joinRoom', checkCode =>{
       if(checkCode === data[1]){
-        socket.emit('joinRoomWaiter', data[1]);
+        socket.emit('joinRoomWaiter', data);
         setStatus("Play");
       }
     });
 
     socket.on('joinRoomWaiter', code =>{
-      if(code === data[1]){socket.emit('joinRoomConfirm', code);}
+      console.log(code);
+      console.log(data);
+      if(code[1] === data[1]){
+        socket.emit('joinRoomConfirm', code);
+      }
+      if(code[0] !== data[0]){
+        console.log("Don't equal)");
+        setOtherPlayer(code[0]);
+      }
     })
 
     socket.on('userLeft', () =>{
@@ -62,14 +71,33 @@ function PlayPage() {
     socket.on('tooManyPlayers', () =>{
       setTooMany(true);
     })
+
+    socket.on('youAreGuest' , (data) =>{
+      console.log("both :(");
+      setYourTurn(false);
+      console.log(yourTurn);
+      socket.emit('youAreHost', data);
+    })
+
+    socket.on('youAreHost', (code) =>{
+      if(data[0] !== code[0]){
+        setXO("O");
+      }
+    })
     
     socket.on('testIncrement', testArray =>{
-      setTestNumber(testArray);
+      console.log("Test increment");
+      setTestNumber(testArray[0]);
+      if(testArray[1][0] === data[0]){
+        console.log("Here");
+        setYourTurn(true);
+      }
+      else{setYourTurn(false);}
     })
   }, [])
 
+  console.log(yourTurn);
   if(tooMany){
-    var username = data[0];
     return(
       <div className="toomany-body">
         <h1 className="waiting-header">Tic-Tac-Toe</h1>
@@ -79,7 +107,6 @@ function PlayPage() {
     )
   }
   if(userLeft){
-    var username = data[0];
     return(
       <div className="userLeft-body">
         <h1 className="waiting-header">Tic-Tac-Toe</h1>
@@ -105,7 +132,11 @@ function PlayPage() {
   if(status === "Play"){
     return(
       <div>
-        <Game/>
+        <h1>{testNumber}</h1>
+        <button onClick={ () => testIncrement()}>Increment</button>
+        <h1>Other player is: {otherPlayer}</h1>
+        <h1 className={`yourTurnText-${yourTurn}`}>It's your turn</h1>
+        <h1 className={`notYourTurnText-${yourTurn}`}>It's {otherPlayer}'s turn</h1>
       </div>
     )
   }

@@ -41,15 +41,28 @@ io.on('connection', (socket) => {
         if(userCode === undefined){
           userCode=code;
         }
+        var otherUsername ="";
+        for(var x = 0; x < waitingRooms.length; x++){
+          if(waitingRooms[x][0] !== code[0]){
+            otherUsername= waitingRooms[x][0];
+          }
+        }
+        var newUserAndCode = [otherUsername, code[1]];
+        io.to(socket.id).emit('youAreGuest', newUserAndCode);
       }
       else{
         if(room.length >= 2){io.to(socket.id).emit('tooManyPlayers');}
       }
     })
 
+    socket.on('youAreHost', data =>{
+        console.log("Testing here");
+        console.log(data);
+        io.to(data[1]).emit('youAreHost', data[0]);
+    })
+
     socket.on('joinRoomWaiter', code =>{
       io.emit('joinRoomWaiter', code);
-      console.log("test6");
     })
 
     socket.on('joinRoomConfirm', code =>{
@@ -57,19 +70,18 @@ io.on('connection', (socket) => {
       if(indexToRemove !== -1){waitingRooms.splice(indexToRemove, 1);}
       console.log(indexToRemove);
       socket.leave("lobby");
-      socket.join(code);
-      console.log("test7");
+      socket.join(code[1]);
     })
 
     socket.on('testIncrement', testArray =>{
-      io.to(testArray[1]).emit('testIncrement', testArray[0]+1);
-      console.log("test4");
+      console.log(testArray);
+      var increment = testArray[0] + 1;
+      var newArray = [increment, testArray[1]]
+      io.to(testArray[1][1]).emit('testIncrement', newArray);
     })
   
     socket.on('disconnect', () => {
       console.log(userCode + ' has left');
-      console.log("test5");
-      console.log(userCode);
       if(userCode !== undefined){socket.to(userCode[1]).emit("userLeft");}
       var indexToRemove = waitingRooms.indexOf(userCode);
       if(indexToRemove !== -1){waitingRooms.splice(indexToRemove, 1);}

@@ -37,3 +37,11 @@
 .userLeft-button:hover, .toomany-button:hover{
     opacity: 1;
 }
+
+.yourTurnText-false{
+    visibility: hidden;
+}
+
+.notYourTurnText-true{
+    visibility: hidden;
+}
