@@ -42,7 +42,7 @@
     pointer-events: none;
 }
 
-.yourTurnText-O, .yourTurnText-X{
+.yourTurnText-O, .yourTurnText-X, .yourTurnText-tie{
     display: none;
 }
 
@@ -50,7 +50,11 @@
     display: none;
 }
 
-.playAgainButton-X, .playAgainButton-O{
+.winner-tie{
+    display: none;
+}
+
+.playAgainButton-X, .playAgainButton-O, .playAgainButton-tie{
     border: none;
     outline: none;
     width: 200px;
@@ -64,11 +68,15 @@
     visibility: visible;
 }
 
-.playAgainButton-X:hover, .playAgainButton-O:hover{
+.playAgainButton-X:hover, .playAgainButton-O:hover, .playAgainButton-tie:hover{
     opacity: 1;
 }
 
 .playAgainButton-null{
     visibility: hidden;
     pointer-events: none;
+}
+
+.tieText-null, .tieText-X, .tieText-O{
+    display: none;
 }

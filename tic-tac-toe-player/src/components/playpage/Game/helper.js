@@ -1,3 +1,5 @@
+import { NavLink } from "react-router-dom";
+
 export function calculateWinner(squares) {
     const lines = [
         [0,1,2],
@@ -15,5 +17,15 @@ export function calculateWinner(squares) {
             return squares[a];
         }
     }
-    return null;
+    var tie = true;
+    for(let i = 0; i < squares.length; i++){
+        if(squares[i] === null){tie = false;}
+    }
+
+    if(tie){
+        return "tie";
+    }
+    else{
+        return null;
+    }
 }

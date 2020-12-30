@@ -48,9 +48,6 @@ function PlayPage() {
         let sqCopy = [...squares];
         sqCopy[i] = XO;
         setSquares(sqCopy);
-        // var sq = squares;
-        // sq[i] = XO;
-        // setSquares(sq);
         var moveInfo = [data[0], data[1], sqCopy];
         socket.emit('submitMove', moveInfo);
         console.log(sqCopy);
@@ -58,24 +55,13 @@ function PlayPage() {
     };
 
     const handleClickOther = (sqCopy) =>{
-      const historyPoint = history.slice(0, stepNumber + 1);
-      const current = historyPoint[stepNumber];
-      var sq = squares;
-      
       setSquares(sqCopy);
-      // sq[y] = x;
-      // setSquares(sq);
-      //return if won or occupies
       if(winner) return;
-      // //select square
-      // // squares[y] = XO;
       setYourTurn(true);
   };
 
   const resetBoard = () =>{
-    console.log("hey");
     setSquares(Array(9).fill(null));
-
   };
     //--------------------------------------------
 
@@ -153,6 +139,7 @@ function PlayPage() {
     })
   }, [])
 
+  console.log(winner);
   if(tooMany){
     return(
       <div className="toomany-body">
@@ -194,6 +181,7 @@ function PlayPage() {
             <div className="info-wrapper">
             <h1 className={`yourTurnText-${winner}`}>{yourTurn ? "It's your turn" : "It's " + otherPlayer + "'s turn"}</h1>
             <h1 className={`winner-${winner}`}>{winner === XO ? "You win" : otherPlayer + " wins! You lose..."}</h1>
+            <h1 className={`tieText-${winner}`}>It's a tie!</h1>
             <button onClick={() => resetBoard()} className={`playAgainButton-${winner}`}>Play again</button>
                 {/* <h3 className="turn-text">{winner ? "Winner: " + winner : "It's " +  + "'s turn"}</h3> */}
             </div>
