@@ -31,25 +31,45 @@ function PlayPage() {
   }
 
   //GAME STUFF-----------------------------------------------
-  const [history, setHistory] = useState([Array(9).fill(null)]);
+    const [history, setHistory] = useState([Array(9).fill(null)]);
     const [stepNumber, setStepNumber] = useState(0);
     const [xIsNext, setXisNext] = useState(true);
-    const winner = calculateWinner(history[stepNumber]);
-    const xo = xIsNext ? "X" : "O";
+    const [squares, setSquares] = useState(Array(9).fill(null));
+    // const winner = calculateWinner(history[stepNumber]);
 
     const handleClick = (i) =>{
         const historyPoint = history.slice(0, stepNumber + 1);
         const current = historyPoint[stepNumber];
-        const squares = [...current];
+        var winner = calculateWinner(squares);
         //return if won or occupies
         if(winner || squares[i]) return;
         //select square
-        squares[i] = xo;
+        var sq = squares;
+        sq[i] = XO;
+        setSquares(sq);
         setHistory([...historyPoint, squares]);
         setStepNumber(historyPoint.length);
-        setXisNext(!xIsNext);
-        socket.emit('submitMove', data);
+        var moveInfo = [data[0], data[1], XO, i];
+        socket.emit('submitMove', moveInfo);
     };
+
+    const handleClickOther = (x,y) =>{
+      const historyPoint = history.slice(0, stepNumber + 1);
+      const current = historyPoint[stepNumber];
+      var sq = squares;
+      
+      console.log(XO);
+      sq[y] = x;
+      setSquares(sq);
+      //return if won or occupies
+      var winner = calculateWinner(squares);
+      if(winner) return;
+      // //select square
+      // // squares[y] = XO;
+      setHistory([...historyPoint, squares]);
+      setStepNumber(historyPoint.length);
+      setYourTurn(true);
+  };
     //--------------------------------------------
 
   useEffect(() =>{
@@ -77,8 +97,6 @@ function PlayPage() {
     });
 
     socket.on('joinRoomWaiter', code =>{
-      console.log(code);
-      console.log(data);
       if(code[1] === data[1]){
         socket.emit('joinRoomConfirm', code);
       }
@@ -99,19 +117,20 @@ function PlayPage() {
     socket.on('youAreGuest' , (data) =>{
       console.log("both :(");
       setYourTurn(false);
-      console.log(yourTurn);
+      setXO("X");
       socket.emit('youAreHost', data);
     })
 
     socket.on('youAreHost', (code) =>{
       if(data[0] !== code[0]){
-        setXO("O");
       }
     })
 
     socket.on('submitMove', dataTurn =>{
       if(dataTurn[0] !== data[0]){
-        setYourTurn(true);
+        //dataTurn is name, roomId, and value of X or O,  and last move number
+
+        handleClickOther(dataTurn[2], dataTurn[3]);
       }
       else{setYourTurn(false);}
     })
@@ -127,7 +146,6 @@ function PlayPage() {
     })
   }, [])
 
-  console.log(yourTurn);
   if(tooMany){
     return(
       <div className="toomany-body">
@@ -163,17 +181,15 @@ function PlayPage() {
   if(status === "Play"){
     return(
       <div>
-        <h1>{testNumber}</h1>
-        <button onClick={ () => testIncrement()} className={`yourTurnButton-${yourTurn}`}>Increment</button>
         <h1>Other player is: {otherPlayer}</h1>
         <h1 className={`yourTurnText-${yourTurn}`}>It's your turn</h1>
         <h1 className={`notYourTurnText-${yourTurn}`}>It's {otherPlayer}'s turn</h1>
         <div className="board-container">
             <h1 className="board-header">Tic-Tac-Toe</h1>
-            <Board squares={history[stepNumber]} onClick={handleClick} yourTurn={yourTurn}/>
+            <Board squares={squares} onClick={handleClick} yourTurn={yourTurn}/>
             <div className="info-wrapper">
                 
-                <h3 className="turn-text">{winner ? "Winner: " + winner : "It's " + xo + "'s turn"}</h3>
+                {/* <h3 className="turn-text">{winner ? "Winner: " + winner : "It's " +  + "'s turn"}</h3> */}
             </div>
         </div>
       </div>
