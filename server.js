@@ -79,6 +79,10 @@ io.on('connection', (socket) => {
       var newArray = [increment, testArray[1]]
       io.to(testArray[1][1]).emit('testIncrement', newArray);
     })
+
+    socket.on('submitMove', data =>{
+      io.to(data[1]).emit('submitMove', data);
+    })
   
     socket.on('disconnect', () => {
       console.log(userCode + ' has left');

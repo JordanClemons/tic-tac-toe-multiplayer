@@ -5,7 +5,9 @@ import { faSpinner, faSyncAlt} from '@fortawesome/free-solid-svg-icons'
 import io from 'socket.io-client';
 import './play-page.css';
 
-import Game from './Game/game';
+import {calculateWinner} from './Game/helper.js';
+import Board from './Game/board';
+import './Game/game.css'
 
 let socket;
 
@@ -27,6 +29,28 @@ function PlayPage() {
     var testArray = [testNumber, data];
     socket.emit('testIncrement', testArray);
   }
+
+  //GAME STUFF-----------------------------------------------
+  const [history, setHistory] = useState([Array(9).fill(null)]);
+    const [stepNumber, setStepNumber] = useState(0);
+    const [xIsNext, setXisNext] = useState(true);
+    const winner = calculateWinner(history[stepNumber]);
+    const xo = xIsNext ? "X" : "O";
+
+    const handleClick = (i) =>{
+        const historyPoint = history.slice(0, stepNumber + 1);
+        const current = historyPoint[stepNumber];
+        const squares = [...current];
+        //return if won or occupies
+        if(winner || squares[i]) return;
+        //select square
+        squares[i] = xo;
+        setHistory([...historyPoint, squares]);
+        setStepNumber(historyPoint.length);
+        setXisNext(!xIsNext);
+        socket.emit('submitMove', data);
+    };
+    //--------------------------------------------
 
   useEffect(() =>{
     setStatus(loadStatus);
@@ -84,6 +108,13 @@ function PlayPage() {
         setXO("O");
       }
     })
+
+    socket.on('submitMove', dataTurn =>{
+      if(dataTurn[0] !== data[0]){
+        setYourTurn(true);
+      }
+      else{setYourTurn(false);}
+    })
     
     socket.on('testIncrement', testArray =>{
       console.log("Test increment");
@@ -137,6 +168,14 @@ function PlayPage() {
         <h1>Other player is: {otherPlayer}</h1>
         <h1 className={`yourTurnText-${yourTurn}`}>It's your turn</h1>
         <h1 className={`notYourTurnText-${yourTurn}`}>It's {otherPlayer}'s turn</h1>
+        <div className="board-container">
+            <h1 className="board-header">Tic-Tac-Toe</h1>
+            <Board squares={history[stepNumber]} onClick={handleClick} yourTurn={yourTurn}/>
+            <div className="info-wrapper">
+                
+                <h3 className="turn-text">{winner ? "Winner: " + winner : "It's " + xo + "'s turn"}</h3>
+            </div>
+        </div>
       </div>
     )
   }
