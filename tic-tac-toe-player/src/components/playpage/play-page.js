@@ -20,7 +20,7 @@ function PlayPage() {
   const [tooMany, setTooMany] = useState(false);  //If too many players already in lobby, notifies player
   const [XO, setXO] = useState("O"); //Host is O
   const [otherPlayer, setOtherPlayer] = useState("");
-  const [yourTurn, setYourTurn] = useState(false);
+  const [yourTurn, setYourTurn] = useState(true);
 
   const [testNumber, setTestNumber] = useState(0);
   const testIncrement = () =>{
@@ -90,9 +90,9 @@ function PlayPage() {
       setTestNumber(testArray[0]);
       if(testArray[1][0] === data[0]){
         console.log("Here");
-        setYourTurn(true);
+        setYourTurn(false);
       }
-      else{setYourTurn(false);}
+      else{setYourTurn(true);}
     })
   }, [])
 
@@ -111,7 +111,7 @@ function PlayPage() {
       <div className="userLeft-body">
         <h1 className="waiting-header">Tic-Tac-Toe</h1>
         <h1 className="userLeft-text">Player left :(</h1>
-        <Link to={{pathname:"/lobby", username:{username}}}><button className="userLeft-button">Find a new game &nbsp;<FontAwesomeIcon icon={faSyncAlt}/></button></Link> 
+        <Link to={{pathname:"/lobby", username:username}}><button className="userLeft-button">Find a new game &nbsp;<FontAwesomeIcon icon={faSyncAlt}/></button></Link> 
       </div>
     )
   }
@@ -133,7 +133,7 @@ function PlayPage() {
     return(
       <div>
         <h1>{testNumber}</h1>
-        <button onClick={ () => testIncrement()}>Increment</button>
+        <button onClick={ () => testIncrement()} className={`yourTurnButton-${yourTurn}`}>Increment</button>
         <h1>Other player is: {otherPlayer}</h1>
         <h1 className={`yourTurnText-${yourTurn}`}>It's your turn</h1>
         <h1 className={`notYourTurnText-${yourTurn}`}>It's {otherPlayer}'s turn</h1>

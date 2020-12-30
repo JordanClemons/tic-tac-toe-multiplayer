@@ -45,3 +45,7 @@
 .notYourTurnText-true{
     visibility: hidden;
 }
+
+.yourTurnButton-false{
+    pointer-events: none;
+}
