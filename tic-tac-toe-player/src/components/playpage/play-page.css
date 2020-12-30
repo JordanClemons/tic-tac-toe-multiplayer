@@ -38,14 +38,14 @@
     opacity: 1;
 }
 
-.yourTurnText-false{
-    visibility: hidden;
-}
-
-.notYourTurnText-true{
-    visibility: hidden;
-}
-
 .yourTurnButton-false{
     pointer-events: none;
+}
+
+.yourTurnText-O, .yourTurnText-X{
+    display: none;
+}
+
+.winner-null{
+    display: none;
 }

@@ -35,12 +35,12 @@ function PlayPage() {
     const [stepNumber, setStepNumber] = useState(0);
     const [xIsNext, setXisNext] = useState(true);
     const [squares, setSquares] = useState(Array(9).fill(null));
+    const winner = calculateWinner(squares);
     // const winner = calculateWinner(history[stepNumber]);
 
     const handleClick = (i) =>{
         const historyPoint = history.slice(0, stepNumber + 1);
         const current = historyPoint[stepNumber];
-        var winner = calculateWinner(squares);
         //return if won or occupies
         if(winner || squares[i]) return;
         //select square
@@ -62,7 +62,6 @@ function PlayPage() {
       sq[y] = x;
       setSquares(sq);
       //return if won or occupies
-      var winner = calculateWinner(squares);
       if(winner) return;
       // //select square
       // // squares[y] = XO;
@@ -146,6 +145,7 @@ function PlayPage() {
     })
   }, [])
 
+  console.log(winner);
   if(tooMany){
     return(
       <div className="toomany-body">
@@ -181,14 +181,12 @@ function PlayPage() {
   if(status === "Play"){
     return(
       <div>
-        <h1>Other player is: {otherPlayer}</h1>
-        <h1 className={`yourTurnText-${yourTurn}`}>It's your turn</h1>
-        <h1 className={`notYourTurnText-${yourTurn}`}>It's {otherPlayer}'s turn</h1>
         <div className="board-container">
             <h1 className="board-header">Tic-Tac-Toe</h1>
             <Board squares={squares} onClick={handleClick} yourTurn={yourTurn}/>
             <div className="info-wrapper">
-                
+            <h1 className={`yourTurnText-${winner}`}>{yourTurn ? "It's your turn" : "It's " + otherPlayer + "'s turn"}</h1>
+            <h1 className={`winner-${winner}`}>{winner} wins!</h1>
                 {/* <h3 className="turn-text">{winner ? "Winner: " + winner : "It's " +  + "'s turn"}</h3> */}
             </div>
         </div>
