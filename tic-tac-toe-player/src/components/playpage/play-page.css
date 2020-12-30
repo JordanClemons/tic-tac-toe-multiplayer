@@ -49,3 +49,26 @@
 .winner-null{
     display: none;
 }
+
+.playAgainButton-X, .playAgainButton-O{
+    border: none;
+    outline: none;
+    width: 200px;
+    height: 45px;
+    background-color: #4d79ff;
+    color: white;
+    font-size: 20px;
+    border-radius: 20px;
+    opacity: .7;
+    transition: .3s;
+    visibility: visible;
+}
+
+.playAgainButton-X:hover, .playAgainButton-O:hover{
+    opacity: 1;
+}
+
+.playAgainButton-null{
+    visibility: hidden;
+    pointer-events: none;
+}

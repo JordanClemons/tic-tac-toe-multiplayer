@@ -186,7 +186,8 @@ function PlayPage() {
             <Board squares={squares} onClick={handleClick} yourTurn={yourTurn}/>
             <div className="info-wrapper">
             <h1 className={`yourTurnText-${winner}`}>{yourTurn ? "It's your turn" : "It's " + otherPlayer + "'s turn"}</h1>
-            <h1 className={`winner-${winner}`}>{winner} wins!</h1>
+            <h1 className={`winner-${winner}`}>{winner === XO ? "You win" : otherPlayer + " wins! You lose..."}</h1>
+            <button className={`playAgainButton-${winner}`}>Play again</button>
                 {/* <h3 className="turn-text">{winner ? "Winner: " + winner : "It's " +  + "'s turn"}</h3> */}
             </div>
         </div>
