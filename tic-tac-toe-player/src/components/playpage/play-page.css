@@ -54,6 +54,26 @@
     display: none;
 }
 
+.winner-X, .winner-O, .tieText-tie{
+    visibility: hidden;
+    animation: show-animation 2.0s ease-in 0s;
+}
+
+@keyframes show-animation{
+    0%{
+        opacity: 0;
+        visibility: visible;
+    }
+    50%{
+        opacity: 1;
+        visibility: visible;
+    }
+    100%{
+        opacity: 1;
+        visibility: visible;
+    }
+}
+
 .playAgainButton-X, .playAgainButton-O, .playAgainButton-tie{
     border: none;
     outline: none;

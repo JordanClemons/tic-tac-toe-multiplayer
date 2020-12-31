@@ -39,19 +39,16 @@ function PlayPage() {
     // const winner = calculateWinner(history[stepNumber]);
 
     const handleClick = (i) =>{
-        console.log(squares);
         const historyPoint = history.slice(0, stepNumber + 1);
         const current = historyPoint[stepNumber];
         //return if won or occupies
-        if(winner || squares[i]) return;
+        if(squares[i] ||winner) return;
         //select square
         let sqCopy = [...squares];
         sqCopy[i] = XO;
         setSquares(sqCopy);
         var moveInfo = [data[0], data[1], sqCopy];
         socket.emit('submitMove', moveInfo);
-        console.log(sqCopy);
-        console.log(squares);
     };
 
     const handleClickOther = (sqCopy) =>{
@@ -60,9 +57,14 @@ function PlayPage() {
       setYourTurn(true);
   };
 
-  const resetBoard = () =>{
+  const delay = ms => new Promise(res => setTimeout(res, ms));
+  const restartGame = async() =>{
+    await delay(2000);
+    console.log("yo");
     setSquares(Array(9).fill(null));
   };
+
+  if(winner){restartGame();}
     //--------------------------------------------
 
   useEffect(() =>{
@@ -180,9 +182,8 @@ function PlayPage() {
             <Board squares={squares} onClick={handleClick} yourTurn={yourTurn}/>
             <div className="info-wrapper">
             <h1 className={`yourTurnText-${winner}`}>{yourTurn ? "It's your turn" : "It's " + otherPlayer + "'s turn"}</h1>
-            <h1 className={`winner-${winner}`}>{winner === XO ? "You win" : otherPlayer + " wins! You lose..."}</h1>
+            <h1 className={`winner-${winner}`}>{winner === XO ? "You win!" : otherPlayer + " wins! You lose..."}</h1>
             <h1 className={`tieText-${winner}`}>It's a tie!</h1>
-            <button onClick={() => resetBoard()} className={`playAgainButton-${winner}`}>Play again</button>
                 {/* <h3 className="turn-text">{winner ? "Winner: " + winner : "It's " +  + "'s turn"}</h3> */}
             </div>
         </div>
