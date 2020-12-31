@@ -36,6 +36,10 @@ function PlayPage() {
     const [xIsNext, setXisNext] = useState(true);
     const [squares, setSquares] = useState(Array(9).fill(null));
     const winner = calculateWinner(squares);
+
+    const [wins, setWins] = useState(0);
+    const [losses, setLosses] = useState(0);
+    const [ties, setTies] = useState(0);
     // const winner = calculateWinner(history[stepNumber]);
 
     const handleClick = (i) =>{
@@ -59,8 +63,12 @@ function PlayPage() {
 
   const delay = ms => new Promise(res => setTimeout(res, ms));
   const restartGame = async() =>{
+    console.log("yo?");
     await delay(2000);
-    console.log("yo");
+    if(winner === XO){setWins(wins + 1);}
+    else if(winner === "tie"){setTies(ties+1);}
+    else{setLosses(losses+1);}
+    // winner=null;
     setSquares(Array(9).fill(null));
   };
 
@@ -184,7 +192,20 @@ function PlayPage() {
             <h1 className={`yourTurnText-${winner}`}>{yourTurn ? "It's your turn" : "It's " + otherPlayer + "'s turn"}</h1>
             <h1 className={`winner-${winner}`}>{winner === XO ? "You win!" : otherPlayer + " wins! You lose..."}</h1>
             <h1 className={`tieText-${winner}`}>It's a tie!</h1>
-                {/* <h3 className="turn-text">{winner ? "Winner: " + winner : "It's " +  + "'s turn"}</h3> */}
+            <div className="scoreboard-body">
+              <div className="win-board-body">
+                <h1 className="win-board-text">Wins</h1>
+                <h1 className="win-board-number">{wins}</h1>
+              </div>
+              <div className="loss-board-body">
+                <h1 className="loss-board-text">Losses</h1>
+                <h1 className="loss-board-number">{losses}</h1>
+              </div>
+              <div className="tie-board-body">
+                <h1 className="tie-board-text">Ties</h1>
+                <h1 className="tie-board-number">{ties}</h1>
+              </div>
+            </div>
             </div>
         </div>
       </div>
