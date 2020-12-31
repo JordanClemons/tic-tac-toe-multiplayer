@@ -14,7 +14,8 @@ let socket;
 function PlayPage() {
 
   const data = useLocation().data;
-  const username = data[0];
+  var username = null;
+  if(data !== undefined){username = data[0];}
   const loadStatus = useLocation().loadStatus;
 
   const [status, setStatus] = useState("Thinking"); //Can either be waiting for player, or in-game, or thinking
@@ -152,6 +153,13 @@ function PlayPage() {
   }, [])
 
   console.log(squares);
+  if(data === null || username === null){
+    return (
+      <div>
+        <Redirect to="/" />
+      </div>
+    );
+  }
   if(tooMany){
     return(
       <div className="toomany-body">

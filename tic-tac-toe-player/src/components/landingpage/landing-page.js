@@ -35,9 +35,16 @@ function LandingPage() {
 
     //Generated unique code and sets state to redirect to waiting
     const goToPlay = () =>{
-        var unique = Math.round(Math.random() * 999999);    //Creates unique code
-        setCode(unique);
-        setPlay(true);
+        if(username.length > 0){
+          var unique = Math.round(Math.random() * 999999);    //Creates unique code
+          setCode(unique);
+          setPlay(true);
+        }
+    }
+
+    //Goes to lobby only if there's a username inputted
+    const goToLobby = () =>{
+      if(username.length > 0){setLobby(true);}
     }
 
     useEffect(() => {
@@ -61,7 +68,7 @@ function LandingPage() {
       <div className={`join-popup popupVisible-${joinPopup}`}>
           <div ref={node} className="join-container">
             <input className="join-username" placeholder="Username" onChange={e => setUsername(e.target.value)} value={username}></input>
-            <button className="join-button-popup" onClick={() => setLobby(true)}>Join</button>
+            <button className="join-button-popup" onClick={() => goToLobby()}>Join</button>
           </div>
       </div>
       <div className={`create-popup popupVisible-${createPopup}`}>
