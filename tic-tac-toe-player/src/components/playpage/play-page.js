@@ -65,11 +65,13 @@ function PlayPage() {
   const restartGame = async() =>{
     console.log("yo?");
     await delay(2000);
+    
+    // winner=null;
+    setSquares(Array(9).fill(null));
     if(winner === XO){setWins(wins + 1);}
     else if(winner === "tie"){setTies(ties+1);}
     else{setLosses(losses+1);}
-    // winner=null;
-    setSquares(Array(9).fill(null));
+    console.log(squares);
   };
 
   if(winner){restartGame();}
@@ -149,7 +151,7 @@ function PlayPage() {
     })
   }, [])
 
-  console.log(winner);
+  console.log(squares);
   if(tooMany){
     return(
       <div className="toomany-body">
