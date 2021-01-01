@@ -36,15 +36,25 @@ io.on('connection', (socket) => {
         if(userCode === undefined){
           userCode=code;
         }
+
         var otherUsername ="";
+        console.log(waitingRooms);
+        console.log(code);
         for(var x = 0; x < waitingRooms.length; x++){
-          if(waitingRooms[x][0] !== code[0]){
+          if(waitingRooms[x][1] === code[1]){
             otherUsername= waitingRooms[x][0];
           }
         }
+
+        var clients = io.sockets.adapter.rooms[code[1]].sockets;
+        for (var clientId in clients ) {
+          if(clientId !== socket.id){
+            io.to(clientId).emit('youAreHost', code);
+          }
+     }
+
         var newUserAndCode = [otherUsername, code[1]];
         io.to(socket.id).emit('youAreGuest', newUserAndCode);
-        io.to(code[1]).emit('youAreHost', code);
         var indexToRemove = -1;
         for(var x = 0; x < waitingRooms.length; x++){
           if(waitingRooms[x][1] ===  userCode[1]){
@@ -76,7 +86,13 @@ io.on('connection', (socket) => {
     })
 
     socket.on('submitMove', data =>{
-      io.to(data[1]).emit('submitMove', data);
+      //io.to(data[1]).emit('submitMove', data);
+      var clients = io.sockets.adapter.rooms[data[1]].sockets;
+      for (var clientId in clients ) {
+        if(clientId !== socket.id){
+          io.to(clientId).emit('submitMove', data);
+        }
+      }
     })
   
     socket.on('disconnect', () => {

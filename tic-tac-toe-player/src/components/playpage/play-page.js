@@ -50,6 +50,7 @@ function PlayPage() {
         setSquares(sqCopy);
         var moveInfo = [data[0], data[1], sqCopy];
         socket.emit('submitMove', moveInfo);
+        setYourTurn(false);
     };
 
     const handleClickOther = (sqCopy) =>{
@@ -126,22 +127,19 @@ function PlayPage() {
     })
 
     socket.on('youAreHost', (code) =>{
-      if(data[0] !== code[0]){
         console.log(code);
         setOtherPlayer(code[0]);
         setYourTurn(true);
         setXO("O");
         setStatus("PlayHost");
-      }
+      
     })
 
     socket.on('submitMove', dataTurn =>{
-      if(dataTurn[0] !== data[0]){
         //dataTurn is name, roomId, and value of X or O,  and last move number
 
         handleClickOther(dataTurn[2]);
-      }
-      else{setYourTurn(false);}
+      
     })
     
     socket.on('testIncrement', testArray =>{
