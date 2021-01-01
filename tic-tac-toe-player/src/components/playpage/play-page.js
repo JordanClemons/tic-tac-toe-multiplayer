@@ -26,10 +26,6 @@ function PlayPage() {
   const [yourTurn, setYourTurn] = useState(true);
 
   const [testNumber, setTestNumber] = useState(0);
-  const testIncrement = () =>{
-    var testArray = [testNumber, data];
-    socket.emit('testIncrement', testArray);
-  }
 
   //GAME STUFF-----------------------------------------------
     const [history, setHistory] = useState([Array(9).fill(null)]);
@@ -96,7 +92,9 @@ function PlayPage() {
 
   useEffect(() =>{
     socket.on('joinRoom', checkCode =>{
+      console.log(checkCode);
       if(checkCode === data[1]){
+        console.log("They trying to join yo");
         socket.emit('joinRoomWaiter', data);
         setStatus("Play");
       }
@@ -108,7 +106,6 @@ function PlayPage() {
       }
       if(code[0] !== data[0]){
         console.log("Don't equal)");
-        setOtherPlayer(code[0]);
       }
     })
 
@@ -121,14 +118,20 @@ function PlayPage() {
     })
 
     socket.on('youAreGuest' , (data) =>{
+      console.log(data);
       console.log("both :(");
       setYourTurn(false);
       setXO("X");
-      socket.emit('youAreHost', data);
+      setOtherPlayer(data[0]);
     })
 
     socket.on('youAreHost', (code) =>{
       if(data[0] !== code[0]){
+        console.log(code);
+        setOtherPlayer(code[0]);
+        setYourTurn(true);
+        setXO("O");
+        setStatus("PlayHost");
       }
     })
 
@@ -152,7 +155,7 @@ function PlayPage() {
     })
   }, [])
 
-  console.log(squares);
+  console.log(otherPlayer);
   if(data === null || username === null){
     return (
       <div>
@@ -165,7 +168,7 @@ function PlayPage() {
       <div className="toomany-body">
         <h1 className="waiting-header">Tic-Tac-Toe</h1>
         <h1 className="toomany-text">This lobby is full :(</h1>
-        <Link to={{pathname:"/lobby", username:{username}}}><button className="toomany-button">Find a new game &nbsp;<FontAwesomeIcon icon={faSyncAlt}/></button></Link> 
+        <Link to={{pathname:"/lobby", username:username}}><button className="toomany-button">Find a new game &nbsp;<FontAwesomeIcon icon={faSyncAlt}/></button></Link> 
       </div>
     )
   }
@@ -192,7 +195,7 @@ function PlayPage() {
       </div>
     )
   }
-  if(status === "Play"){
+  if(status === "Play" || status === "PlayHost"){
     return(
       <div>
         <div className="board-container">

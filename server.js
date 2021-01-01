@@ -17,27 +17,22 @@ io.on('connection', (socket) => {
     var userCode;
     console.log('We have a new connection!');
   
-    socket.join("lobby");
 
     socket.on('addRoom', data =>{
         waitingRooms = [data, ...waitingRooms];
         userCode= data;
-        console.log(waitingRooms);
-        console.log("test1");
+        socket.join(data[1]);
     })
 
     socket.on('requestRooms', () =>{
         io.to(socket.id).emit('rooms', waitingRooms);
-        console.log("test2");
     })
 
     socket.on('joinRoom', code =>{
       var room = io.sockets.adapter.rooms[code[1]];
-      if(room === undefined){
-        socket.leave("lobby");
+      if(room.length >= 2){io.to(socket.id).emit('tooManyPlayers');}
+      else{
         socket.join(code[1]);
-        io.emit('joinRoom', code[1]);
-        console.log("test3");
         if(userCode === undefined){
           userCode=code;
         }
@@ -49,15 +44,18 @@ io.on('connection', (socket) => {
         }
         var newUserAndCode = [otherUsername, code[1]];
         io.to(socket.id).emit('youAreGuest', newUserAndCode);
-      }
-      else{
-        if(room.length >= 2){io.to(socket.id).emit('tooManyPlayers');}
+        io.to(code[1]).emit('youAreHost', code);
+        var indexToRemove = -1;
+        for(var x = 0; x < waitingRooms.length; x++){
+          if(waitingRooms[x][1] ===  userCode[1]){
+            indexToRemove = x;
+          }
+        }
+        if(indexToRemove !== -1){waitingRooms.splice(indexToRemove, 1);}
       }
     })
 
     socket.on('youAreHost', data =>{
-        console.log("Testing here");
-        console.log(data);
         io.to(data[1]).emit('youAreHost', data[0]);
     })
 
@@ -68,13 +66,10 @@ io.on('connection', (socket) => {
     socket.on('joinRoomConfirm', code =>{
       var indexToRemove = waitingRooms.indexOf(userCode);
       if(indexToRemove !== -1){waitingRooms.splice(indexToRemove, 1);}
-      console.log(indexToRemove);
-      socket.leave("lobby");
       socket.join(code[1]);
     })
 
     socket.on('testIncrement', testArray =>{
-      console.log(testArray);
       var increment = testArray[0] + 1;
       var newArray = [increment, testArray[1]]
       io.to(testArray[1][1]).emit('testIncrement', newArray);
