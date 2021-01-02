@@ -58,6 +58,12 @@ function LandingPage() {
     if(play === true){return(<Redirect to={{pathname:"/play", data:[username, code], loadStatus:"Waiting"}}></Redirect>);}
     if(lobby === true){return(<Redirect to={{pathname:"/lobby", username:username}}></Redirect>);}
 
+    const settingUsername = (e) =>{
+      if(e.length < 20){
+        setUsername(e);
+      }
+    }
+
   return (
     <div className="landing-body">
       <div className="landing-container">
@@ -68,14 +74,14 @@ function LandingPage() {
       <div className={`join-popup popupVisible-${joinPopup}`}>
           <div ref={node} className="join-container">
             <div className="join-header"><h1>Join game</h1></div>
-            <input className="join-username" placeholder="Username" onChange={e => setUsername(e.target.value)} value={username}></input>
+            <input className="join-username" placeholder="Username" onChange={e => settingUsername(e.target.value)} value={username}></input>
             <button className="join-button-popup" onClick={() => goToLobby()}>Join</button>
           </div>
       </div>
       <div className={`create-popup popupVisible-${createPopup}`}>
         <div ref={node2} className="create-container">
             <div className="create-header"><h1>Create a game</h1></div>
-            <input className="create-username" placeholder="Username" onChange={e => setUsername(e.target.value)} value={username}></input>
+            <input className="create-username" placeholder="Username" onChange={e => settingUsername(e.target.value)} value={username}></input>
             <button className="create-button-popup" onClick={() => goToPlay()}>Create</button>
         </div>
       </div>
