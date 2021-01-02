@@ -195,10 +195,12 @@ function PlayPage() {
   }
   if(status === "Play" || status === "PlayHost"){
     return(
-      <div className="game">
-        <div className="board-container">
+      <div style={{display:"flex", alignItems:"center", justifyContent:"center", height:"100%"}}>
+        <div className="game">
             <h1 className="board-header">Tic-Tac-Toe</h1>
-            <Board squares={squares} onClick={handleClick} yourTurn={yourTurn}/>
+            <div className="board-container">
+              <Board squares={squares} onClick={handleClick} yourTurn={yourTurn}/>
+            </div>
             <div className="info-wrapper">
             <h1 className={`yourTurnText-${winner}`}>{yourTurn ? "It's your turn" : "It's " + otherPlayer + "'s turn... "}</h1>
             <h1 className={`winner-${winner}`}>{winner === XO ? "You win!" : otherPlayer + " wins! You lose..."}</h1>
