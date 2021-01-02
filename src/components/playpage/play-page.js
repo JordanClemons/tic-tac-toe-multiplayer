@@ -77,7 +77,7 @@ function PlayPage() {
 
   useEffect(() =>{
     setStatus(loadStatus);
-    socket=io('http://localhost:5000', {transports: ['websocket']});
+    socket=io('https://io-tic-tac-toe-backend.herokuapp.com/', {transports: ['websocket']});
 
   return () => {
     socket.disconnect();

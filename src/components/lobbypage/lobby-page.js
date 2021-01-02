@@ -19,7 +19,7 @@ function PlayPage() {
   const [redirectCode, setRedirectCode] = useState(-1);   //Set to the room code we are entering then redirects to it
 
   useEffect(() =>{
-    socket=io('localhost:5000', {transports: ['websocket']});
+    socket=io('https://io-tic-tac-toe-backend.herokuapp.com/', {transports: ['websocket']});
     socket.emit('requestRooms'); //Requests the list of available rooms
 
   return () => {
