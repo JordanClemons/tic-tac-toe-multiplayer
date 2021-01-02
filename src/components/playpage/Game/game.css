@@ -1,15 +1,15 @@
 .squares{
     color: black;
-    background-color: white;
+    background-color: transparent;
     align-items: center;
     justify-content: center;
     display: flex;
     font-size: 13vw;
-    border:0.5vw solid rgb(0, 0, 0);
+    border:.1vw solid rgb(0, 0, 0);
     
-    transition: 0.3s;
+    
     height:24vw;
-    width: 77px;
+    width: 24vw;
     -webkit-appearance: none;
     -moz-appearance: none;
     appearance: none;
@@ -35,7 +35,7 @@
     display: grid;
     grid-template: repeat(3,1fr)/repeat(3,1fr);
     
-    border:1.5vw solid black;
+    border:1vw solid black;
     
     justify-self: center;
     
@@ -43,15 +43,6 @@
 }
 
 .board-container{
-    position: absolute;
-    
-    height: 60%;
-    text-align: center;
-    margin: 0 auto;
-    width: 100%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
     
     
 }

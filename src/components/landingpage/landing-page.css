@@ -97,6 +97,10 @@
     font-size: 15px;
 }
 
+.landing-header{
+    font-size: 60px;
+}
+
  /* MOBILE */
  @media(max-width:825px){
     .join-container, .create-container, .join-username, .join-code, .create-username{

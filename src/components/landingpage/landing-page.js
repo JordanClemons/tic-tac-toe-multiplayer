@@ -67,7 +67,7 @@ function LandingPage() {
   return (
     <div className="landing-body">
       <div className="landing-container">
-          <h1>Tic-Tac-Toe-Io</h1>
+          <h1 className="landing-header">Tic-Tac-Toe-Io</h1>
           <button className="landing-button" onClick={() => enableJoin()}>Join Game</button>
           <button className="landing-button" onClick={() => enableCreate()}>Create Game</button>
       </div>
