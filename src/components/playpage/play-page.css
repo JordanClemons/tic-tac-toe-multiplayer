@@ -98,6 +98,14 @@
     font-size: 12px;
 }
 
+.game{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 100%;
+    background-color: gray;
+}
+
    /* MOBILE */
    @media(max-width:700px){
     .win-board-body, .loss-board-body, .tie-board-body{

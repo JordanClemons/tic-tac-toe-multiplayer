@@ -195,7 +195,7 @@ function PlayPage() {
   }
   if(status === "Play" || status === "PlayHost"){
     return(
-      <div>
+      <div className="game">
         <div className="board-container">
             <h1 className="board-header">Tic-Tac-Toe</h1>
             <Board squares={squares} onClick={handleClick} yourTurn={yourTurn}/>
