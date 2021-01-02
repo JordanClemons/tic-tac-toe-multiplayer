@@ -8,8 +8,9 @@
     border:0.5vw solid rgb(0, 0, 0);
     
     transition: 0.3s;
-    height:24vw;
-    width: 16vw;
+    height: 100%;
+    width: 100%;
+    outline: none;
 }
 
 .X, .O{
@@ -18,8 +19,8 @@
 
 .board {
     
-    width: 73vw;
-    height: 73vw;
+    width: 70vw;
+    height: 70vw;
     
     margin: 0 auto;
     display: grid;
@@ -37,7 +38,6 @@
     left: 0%;
     height: 100%;
     width: 100%;
-    
     
 }
 

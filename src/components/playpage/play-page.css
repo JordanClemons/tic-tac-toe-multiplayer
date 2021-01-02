@@ -106,6 +106,13 @@
     background-color: gray;
 }
 
+div {
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+}
+
    /* MOBILE */
    @media(max-width:700px){
     .win-board-body, .loss-board-body, .tie-board-body{
