@@ -10,6 +10,9 @@
     transition: 0.3s;
     height:24vw;
     width: 77px;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
 }
 
 .squares:active{
