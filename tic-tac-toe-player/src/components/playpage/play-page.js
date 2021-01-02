@@ -182,7 +182,7 @@ function PlayPage() {
   if(status === "Waiting"){
     return(
       <div className="waiting-body">
-        <h1 className="waiting-header">Tic-Tac-Toe</h1>
+        <h1 className="waiting-header">Tic-Tac-Toe-io</h1>
         <div className="waiting-container">
           <div className="waiting-spinner"><FontAwesomeIcon icon={faSpinner} class="fa-spin"/></div>
           <div className="waiting-text-container">
