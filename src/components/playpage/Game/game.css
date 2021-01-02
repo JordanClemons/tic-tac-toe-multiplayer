@@ -1,11 +1,15 @@
 .squares{
+    color: black;
     background-color: transparent;
-    border-style: solid;
-    border-color: black;
-    border-width: 2px;
-    cursor: pointer;
-    outline: none;
-    font-size: 90px;
+    align-items: center;
+    justify-content: center;
+    display: flex;
+    font-size: 13vw;
+    border:0.5vw solid rgb(0, 0, 0);
+    
+    transition: 0.3s;
+    height:24vw;
+    width: 24vw;
 }
 
 .X, .O{
@@ -14,8 +18,8 @@
 
 .board {
     
-    width: 50vw;
-    height: 50vw;
+    width: 73vw;
+    height: 73vw;
     
     margin: 0 auto;
     display: grid;
@@ -24,7 +28,6 @@
     border:0.5vw solid black;
     
     justify-self: center;
-    
     
 }
 
