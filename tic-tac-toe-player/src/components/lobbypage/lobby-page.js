@@ -27,7 +27,7 @@ function PlayPage() {
     socket.off();
   }
 
-}, ['localhost:5000'])
+}, [])
 
 useEffect(() =>{
     //Recieve all the rooms (only happens once on load)

@@ -84,7 +84,7 @@ function PlayPage() {
     socket.off();
   }
 
-}, ['http://localhost:5000'])
+}, [])
 
   useEffect(() =>{
     if(status === "Waiting"){socket.emit('addRoom', data);} //Sends unique code and username to backend
