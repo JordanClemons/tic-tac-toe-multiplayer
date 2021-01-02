@@ -200,7 +200,7 @@ function PlayPage() {
             <h1 className="board-header">Tic-Tac-Toe</h1>
             <Board squares={squares} onClick={handleClick} yourTurn={yourTurn}/>
             <div className="info-wrapper">
-            <h1 className={`yourTurnText-${winner}`}>{yourTurn ? "It's your turn" : "It's " + otherPlayer + "'s turn"}</h1>
+            <h1 className={`yourTurnText-${winner}`}>{yourTurn ? "It's your turn" : "It's " + otherPlayer + "'s turn... "}</h1>
             <h1 className={`winner-${winner}`}>{winner === XO ? "You win!" : otherPlayer + " wins! You lose..."}</h1>
             <h1 className={`tieText-${winner}`}>It's a tie!</h1>
             <div className="scoreboard-body">

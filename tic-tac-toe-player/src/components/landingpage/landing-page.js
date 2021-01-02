@@ -67,12 +67,14 @@ function LandingPage() {
       </div>
       <div className={`join-popup popupVisible-${joinPopup}`}>
           <div ref={node} className="join-container">
+            <div className="join-header"><h1>Join game</h1></div>
             <input className="join-username" placeholder="Username" onChange={e => setUsername(e.target.value)} value={username}></input>
             <button className="join-button-popup" onClick={() => goToLobby()}>Join</button>
           </div>
       </div>
       <div className={`create-popup popupVisible-${createPopup}`}>
         <div ref={node2} className="create-container">
+            <div className="create-header"><h1>Create a game</h1></div>
             <input className="create-username" placeholder="Username" onChange={e => setUsername(e.target.value)} value={username}></input>
             <button className="create-button-popup" onClick={() => goToPlay()}>Create</button>
         </div>
